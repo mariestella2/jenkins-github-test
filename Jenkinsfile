@@ -3,29 +3,17 @@ pipeline {
 
     stages {
 
-        stage('Preparation') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Preparation'
+                sh 'docker build -t test-image .'
             }
         }
 
-        stage('Build') {
+        stage('Run Container') {
             steps {
-                sh 'chmod +x test.sh'
-                sh './test.sh'
+                sh 'docker run --rm test-image'
             }
         }
 
-        stage('Test') {
-            steps {
-                echo 'Tests OK'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Application deployed'
-            }
-        }
     }
 }
